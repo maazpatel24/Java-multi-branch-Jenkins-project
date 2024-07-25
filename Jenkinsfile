@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout code from Git repository
-                git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         // Checkout code from Git repository
+        //         git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
+        //     }
+        // }
         stage('Build') {
             steps {
                 script {
