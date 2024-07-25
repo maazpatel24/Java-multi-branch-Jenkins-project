@@ -12,29 +12,6 @@ pipeline {
         //         git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
         //     }
         // }
-        // stage ('Compile Stage') {
-
-        //     steps {
-        //         withMaven(maven : 'Maven-3.9.0') {
-        //             sh 'mvn clean compile'
-        //         }
-        //     }
-        // }
-        // stage ('Testing Stage') {
-
-        //     steps {
-        //         withMaven(maven : 'Maven-3.9.0') {
-        //             sh 'mvn test'
-        //         }
-        //     }
-        // }
-        // stage ('Deployment Stage') {
-        //     steps {
-        //         withMaven(maven : 'Maven-3.9.0') {
-        //             sh 'mvn deploy'
-        //         }
-        //     }
-        // }
         stage('Build') {
             steps {
                 script {
@@ -50,16 +27,10 @@ pipeline {
             steps {
                 script {
                     // echo "Building in branch: ${env.BRANCH_NAME}"
-                    withMave(MAVEN: 'Maven-3.9.0') {
+                    withEnv(["PATH+MAVEN=${MAVEN_HOME}/bin"])  {
                     sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
                 }
                 }
-                // echo "Runing in branch: ${env.BRANCH_NAME}"
-                 // Execute the Java application
-                
-                // withMave(MAVEN: 'Maven-3.9.0') {
-                //     sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
-                // }
             }
         }
         stage('Archive Artifacts') {
