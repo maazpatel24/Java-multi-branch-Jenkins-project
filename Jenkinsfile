@@ -50,7 +50,7 @@ pipeline {
             steps {
                 // echo "Runing in branch: ${env.BRANCH_NAME}"
                  // Execute the Java application
-                withMave(maven: 'Maven-3.9.0') {
+                withMave(MAVEN: 'Maven-3.9.0') {
                     sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
                 }
             }
