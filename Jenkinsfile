@@ -48,11 +48,18 @@ pipeline {
         }
         stage('Run') {
             steps {
-                // echo "Runing in branch: ${env.BRANCH_NAME}"
-                 // Execute the Java application
-                withMave(MAVEN: 'Maven-3.9.0') {
+                script {
+                    // echo "Building in branch: ${env.BRANCH_NAME}"
+                    withMave(MAVEN: 'Maven-3.9.0') {
                     sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
                 }
+                }
+                // echo "Runing in branch: ${env.BRANCH_NAME}"
+                 // Execute the Java application
+                
+                // withMave(MAVEN: 'Maven-3.9.0') {
+                //     sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
+                // }
             }
         }
         stage('Archive Artifacts') {
