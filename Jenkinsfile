@@ -6,12 +6,6 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         // Checkout code from Git repository
-        //         git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
-        //     }
-        // }
         stage('Build') {
             steps {
                 script {
@@ -27,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // echo "Building in branch: ${env.BRANCH_NAME}"
-                    withMave(maven: 'Maven-3.9.0') {
+                    withMave(["PATH+MAVEN=${MAVEN_HOME}/bin"]) {
                     sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
                 }
                 }
