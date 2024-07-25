@@ -1,56 +1,32 @@
 pipeline {
     agent any
 
+     environment {
+        MAVEN_HOME = tool 'Maven-3.9.0' // Ensure this matches your Maven tool name
+    }
+
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         // Checkout code from Git repository
-        //         git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
-        //     }
-        // }
-        stage ('Compile Stage') {
-
+        stage('Build') {
             steps {
-                withMaven(maven : 'Maven-3.9.0') {
-                    sh 'mvn clean compile'
+                script {
+                    // echo "Building in branch: ${env.BRANCH_NAME}"
+                    withEnv(["PATH+MAVEN=${MAVEN_HOME}/bin"]) {
+                        // Clean and compile the Maven project
+                        sh 'mvn clean package'
+                    }
                 }
             }
         }
-        stage ('Testing Stage') {
-
+        stage('Run') {
             steps {
-                withMaven(maven : 'Maven-3.9.0') {
-                    sh 'mvn test'
+                script {
+                    // echo "Building in branch: ${env.BRANCH_NAME}"
+                    withMave(["PATH+MAVEN=${MAVEN_HOME}/bin"]) {
+                    sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
+                }
                 }
             }
         }
-        stage ('Deployment Stage') {
-            steps {
-                withMaven(maven : 'Maven-3.9.0') {
-                    sh 'mvn deploy'
-                }
-            }
-        }
-        // stage('Build') {
-        //     steps {
-        //         script {
-        //             echo "Building in branch: ${env.BRANCH_NAME}"
-        //             withMave(maven: 'Maven-3.9.0') {
-        //                 // Clean and compile the Maven project
-        //                 sh 'mvn clean compile'
-        //             }
-        //         }
-        //     }
-        // }
-        // stage('Run') {
-        //     steps {
-        //         echo "Runing in branch: ${env.BRANCH_NAME}"
-        //          // Execute the Java application
-        //         withMave(maven: 'Maven-3.9.0') {
-        //             sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
-        //         }
-        //     }
-        // }
         stage('Archive Artifacts') {
             steps {
                 // Archive the built artifacts
