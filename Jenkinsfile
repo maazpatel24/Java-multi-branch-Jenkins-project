@@ -6,16 +6,16 @@ pipeline {
     }
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         // Checkout code from Git repository
-        //         git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
-        //     }
-        // }
+        stage('Checkout') {
+            steps {
+                // Checkout code from Git repository
+                git credentialsId: 'git-access', url: 'https://github.com/maazpatel24/DevOpsClassCode.git', branch: env.BRANCH_NAME
+            }
+        }
         stage('Build') {
             steps {
                 script {
-                    // echo "Building in branch: ${env.BRANCH_NAME}"
+                    echo "Building in branch: ${env.BRANCH_NAME}"
                     withEnv(["PATH+MAVEN=${MAVEN_HOME}/bin"]) {
                         // Clean and compile the Maven project
                         sh 'mvn clean package'
