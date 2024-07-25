@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // echo "Building in branch: ${env.BRANCH_NAME}"
-                    withMave(["PATH+MAVEN=${MAVEN_HOME}/bin"]) {
+                    withEnv(["PATH+MAVEN=${MAVEN_HOME}/bin"]) {
                         sh 'mvn exec:java -Dexec.mainClass="com.example.App"'
                     }
                 }
